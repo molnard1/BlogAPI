@@ -10,6 +10,7 @@ namespace BlogAPI
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<BlogContext>();
             builder.Services.AddScoped<IBlogUserInterface, BlogUserService>();
+            builder.Services.AddScoped<IPostInterface, PostInterface>();
 
             // Add services to the container.
 

@@ -10,7 +10,7 @@ namespace BlogAPI.Repositories
 
         Task<BlogUser> Post(CreateBlogUser createBlogUser);
 
-        Task<BlogUser> Put(UpdateBlogUser updateBlogUser);
+        Task<BlogUser> Put(Guid id, UpdateBlogUser updateBlogUser);
         Task<bool> Delete(Guid id);
     }
 }

@@ -40,9 +40,9 @@ namespace BlogAPI.Repositories
             return user;
         }
 
-        public async Task<BlogUser> Put(UpdateBlogUser updateBlogUser)
+        public async Task<BlogUser> Put(Guid id, UpdateBlogUser updateBlogUser)
         {
-            var existing = await _dbContext.Blogusers.FirstAsync(x => x.Id == updateBlogUser.Id);
+            var existing = await _dbContext.Blogusers.FirstAsync(x => x.Id == id);
             existing.Username = updateBlogUser.Username;
             existing.UserEmail = updateBlogUser.UserEmail;
             existing.Password = updateBlogUser.Password;

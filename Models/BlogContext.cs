@@ -27,24 +27,31 @@ public partial class BlogContext : DbContext
 
             entity.ToTable("blogposts");
 
-            entity.HasIndex(e => e.UserId, "FK_posts_users");
+            entity.HasIndex(e => e.UserId, "userId");
 
             entity.Property(e => e.PostId)
-                .HasColumnType("int(11)")
+                .HasMaxLength(36)
                 .HasColumnName("postId");
             entity.Property(e => e.Content).HasColumnName("content");
+            entity.Property(e => e.CreatedAt)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValueSql("current_timestamp()")
+                .HasColumnType("timestamp")
+                .HasColumnName("createdAt");
             entity.Property(e => e.Title)
                 .HasColumnType("text")
                 .HasColumnName("title");
+            entity.Property(e => e.UpdatedAt)
+                .HasColumnType("timestamp")
+                .HasColumnName("updatedAt");
             entity.Property(e => e.UserId)
                 .HasMaxLength(36)
-                .HasDefaultValueSql("''")
                 .HasColumnName("userId");
 
             entity.HasOne(d => d.User).WithMany(p => p.Blogposts)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_posts_users");
+                .HasConstraintName("blogposts_ibfk_1");
         });
 
         modelBuilder.Entity<BlogUser>(entity =>

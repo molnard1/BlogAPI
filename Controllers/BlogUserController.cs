@@ -43,11 +43,12 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<BlogUser>>> Put(UpdateBlogUser update)
+        [Route("{id:guid}")]
+        public async Task<ActionResult<List<BlogUser>>> Put(UpdateBlogUser update, Guid id)
         {
             try
             {
-                return Ok(await _blogUserInterface.Put(update));
+                return Ok(await _blogUserInterface.Put(id, update));
             }
             catch
             {
