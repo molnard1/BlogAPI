@@ -1,5 +1,6 @@
 ﻿using BlogAPI.Models;
 using BlogAPI.Models.Dtos;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogAPI.Repositories
@@ -23,8 +24,13 @@ namespace BlogAPI.Repositories
             return await _dbContext.Blogposts.FirstAsync(x => x.PostId == id);
         }
 
-        public async Task<Blogpost> Post(CreateBlogPost createBlogPost)
+        public async Task<ActionResult> Post(CreateBlogPost createBlogPost)
         {
+            if (await _dbContext.Blogusers.CountAsync(x => x.Id == createBlogPost.Author) == 0)
+            {
+                return new BadRequestObjectResult("Nem létezik a megadott felhasználó!");
+            }
+
             var post = new Blogpost
             {
                 UserId = createBlogPost.Author,
@@ -34,7 +40,7 @@ namespace BlogAPI.Repositories
             await _dbContext.Blogposts.AddAsync(post);
             await _dbContext.SaveChangesAsync();
 
-            return post;
+            return new OkObjectResult(post);
         }
 
         public async Task<Blogpost> Put(Guid id, UpdateBlogPost updateBlogPost)

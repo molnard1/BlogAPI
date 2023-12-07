@@ -17,9 +17,9 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Blogpost>> Post(CreateBlogPost post)
+        public async Task<ActionResult> Post(CreateBlogPost post)
         {
-            return StatusCode(201, await _blogPostInterface.Post(post));
+            return await _blogPostInterface.Post(post);
         }
 
         [HttpGet]
