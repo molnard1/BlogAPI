@@ -16,12 +16,12 @@ namespace BlogAPI.Repositories
         
         public async Task<IEnumerable<BlogUser>> Get()
         {
-            return await _dbContext.Users.ToListAsync();
+            return await _dbContext.Blogusers.ToListAsync();
         }
 
         public async Task<BlogUser> GetById(Guid id)
         {
-            return await _dbContext.Users.FirstAsync(x => x.Id == id);
+            return await _dbContext.Blogusers.FirstAsync(x => x.Id == id);
         }
 
         public async Task<BlogUser> Post(CreateBlogUser createBlogUser)
@@ -34,7 +34,7 @@ namespace BlogAPI.Repositories
                 Password = createBlogUser.Password,
                 CreatedTime = DateTime.UtcNow
             };
-            await _dbContext.Users.AddAsync(user);
+            await _dbContext.Blogusers.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
             return user;
@@ -42,7 +42,7 @@ namespace BlogAPI.Repositories
 
         public async Task<BlogUser> Put(UpdateBlogUser updateBlogUser)
         {
-            var existing = await _dbContext.Users.FirstAsync(x => x.Id == updateBlogUser.Id);
+            var existing = await _dbContext.Blogusers.FirstAsync(x => x.Id == updateBlogUser.Id);
             existing.Username = updateBlogUser.Username;
             existing.UserEmail = updateBlogUser.UserEmail;
             existing.Password = updateBlogUser.Password;
@@ -53,11 +53,11 @@ namespace BlogAPI.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-            var existing = _dbContext.Users.Where(x => x.Id == id);
+            var existing = _dbContext.Blogusers.Where(x => x.Id == id);
 
             if (!await existing.AnyAsync()) return false;
 
-            _dbContext.Users.Remove(await existing.FirstAsync());
+            _dbContext.Blogusers.Remove(await existing.FirstAsync());
             await _dbContext.SaveChangesAsync();
 
             return true;
