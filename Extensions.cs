@@ -4,9 +4,9 @@ namespace BlogAPI
 {
     public static class Extensions
     {
-        public static BlogUser AsDto(this Models.BlogUser blogUser)
+        public static BlogUserDto AsDto(this Models.BlogUser blogUser)
         {
-            return new BlogUser(
+            return new BlogUserDto(
                 blogUser.Id,
                 blogUser.Username,
                 blogUser.UserEmail,

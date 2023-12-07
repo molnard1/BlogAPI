@@ -29,6 +29,13 @@ namespace BlogAPI.Controllers
         }
 
         [HttpGet]
+        [Route("/BlogPost/byAuthor/{id:guid}")]
+        public async Task<ActionResult<List<Blogpost>>> GetByAuthor(Guid id)
+        {
+            return Ok(await _blogPostInterface.GetByAuthor(id));
+        }
+
+        [HttpGet]
         [Route("{id:guid}")]
         public async Task<ActionResult<Blogpost>> Get(Guid id)
         {

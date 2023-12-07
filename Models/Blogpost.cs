@@ -1,4 +1,6 @@
-﻿namespace BlogAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace BlogAPI.Models;
 
 public class Blogpost
 {
@@ -14,5 +16,6 @@ public class Blogpost
 
     public DateTime? UpdatedAt { get; set; }
 
+    [JsonIgnore]
     public virtual BlogUser User { get; set; } = null!;
 }

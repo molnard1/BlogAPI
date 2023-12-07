@@ -1,7 +1,6 @@
 ﻿using BlogAPI.Models.Dtos;
 using BlogAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using BlogUser = BlogAPI.Models.BlogUser;
 
 namespace BlogAPI.Controllers
 {
@@ -17,20 +16,20 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BlogUser>> Post(CreateBlogUser user)
+        public async Task<ActionResult<BlogUserDto>> Post(CreateBlogUser user)
         {
             return StatusCode(201, await _blogUserInterface.Post(user));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BlogUser>>> Get()
+        public async Task<ActionResult<List<BlogUserDto>>> Get()
         {
             return Ok(await _blogUserInterface.Get());
         }
 
         [HttpGet]
         [Route("{id:guid}")]
-        public async Task<ActionResult<List<BlogUser>>> Get(Guid id)
+        public async Task<ActionResult<List<BlogUserDto>>> Get(Guid id)
         {
             try
             {
@@ -44,7 +43,7 @@ namespace BlogAPI.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<ActionResult<List<BlogUser>>> Put(UpdateBlogUser update, Guid id)
+        public async Task<ActionResult<List<BlogUserDto>>> Put(UpdateBlogUser update, Guid id)
         {
             try
             {

@@ -1,16 +1,14 @@
 ﻿using BlogAPI.Models.Dtos;
-using BlogUser = BlogAPI.Models.BlogUser;
 
 namespace BlogAPI.Repositories
 {
     public interface IBlogUserInterface
     {
-        Task<IEnumerable<BlogUser>> Get();
-        Task<BlogUser> GetById(Guid id);
+        Task<IEnumerable<BlogUserDto>> Get();
+        Task<BlogUserDto> GetById(Guid id);
+        Task<BlogUserDto> Post(CreateBlogUser createBlogUser);
 
-        Task<BlogUser> Post(CreateBlogUser createBlogUser);
-
-        Task<BlogUser> Put(Guid id, UpdateBlogUser updateBlogUser);
+        Task<BlogUserDto> Put(Guid id, UpdateBlogUser updateBlogUser);
         Task<bool> Delete(Guid id);
     }
 }

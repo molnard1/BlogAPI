@@ -24,6 +24,11 @@ namespace BlogAPI.Repositories
             return await _dbContext.Blogposts.FirstAsync(x => x.PostId == id);
         }
 
+        public async Task<List<Blogpost>> GetByAuthor(Guid id)
+        {
+            return await _dbContext.Blogposts.Where(x => x.User.Id == id).ToListAsync();
+        }
+
         public async Task<ActionResult> Post(CreateBlogPost createBlogPost)
         {
             if (await _dbContext.Blogusers.CountAsync(x => x.Id == createBlogPost.Author) == 0)

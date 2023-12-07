@@ -8,6 +8,7 @@ namespace BlogAPI.Repositories
     {
         Task<IEnumerable<Blogpost>> Get();
         Task<Blogpost> GetById(Guid id);
+        Task<List<Blogpost>> GetByAuthor(Guid id);
         Task<ActionResult> Post(CreateBlogPost createBlogPost);
         Task<Blogpost> Put(Guid id, UpdateBlogPost updateBlogPost);
         Task<bool> Delete(Guid id);

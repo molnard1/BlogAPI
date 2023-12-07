@@ -1,7 +1,6 @@
 ﻿using BlogAPI.Models;
 using BlogAPI.Models.Dtos;
 using Microsoft.EntityFrameworkCore;
-using BlogUser = BlogAPI.Models.BlogUser;
 
 namespace BlogAPI.Repositories
 {
@@ -14,17 +13,17 @@ namespace BlogAPI.Repositories
             _dbContext = dbContext;
         }
         
-        public async Task<IEnumerable<BlogUser>> Get()
+        public async Task<IEnumerable<BlogUserDto>> Get()
         {
-            return await _dbContext.Blogusers.ToListAsync();
+            return await _dbContext.Blogusers.Select(x => x.AsDto()).ToListAsync();
         }
 
-        public async Task<BlogUser> GetById(Guid id)
+        public async Task<BlogUserDto> GetById(Guid id)
         {
-            return await _dbContext.Blogusers.FirstAsync(x => x.Id == id);
+            return (await _dbContext.Blogusers.FirstAsync(x => x.Id == id)).AsDto();
         }
 
-        public async Task<BlogUser> Post(CreateBlogUser createBlogUser)
+        public async Task<BlogUserDto> Post(CreateBlogUser createBlogUser)
         {
             var user = new BlogUser
             {
@@ -37,17 +36,17 @@ namespace BlogAPI.Repositories
             await _dbContext.Blogusers.AddAsync(user);
             await _dbContext.SaveChangesAsync();
 
-            return user;
+            return user.AsDto();
         }
 
-        public async Task<BlogUser> Put(Guid id, UpdateBlogUser updateBlogUser)
+        public async Task<BlogUserDto> Put(Guid id, UpdateBlogUser updateBlogUser)
         {
             var existing = await _dbContext.Blogusers.FirstAsync(x => x.Id == id);
             existing.Username = updateBlogUser.Username;
             existing.UserEmail = updateBlogUser.UserEmail;
             existing.Password = updateBlogUser.Password;
             await _dbContext.SaveChangesAsync();
-            return existing;
+            return existing.AsDto();
 
         }
 
